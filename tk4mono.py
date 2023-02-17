@@ -10,48 +10,86 @@ from tkinter.filedialog import askopenfilename
 class App(tk.Frame):
     def __init__(self, master):
         global app
-        global var1
+        global custom        
         global filename
         global entrythingy
         global flags
-        var1 = tk.IntVar()
+  
         super().__init__(master)
+        photo = PhotoImage(file = "Micon.png")
+        root.iconphoto(False, photo) 
         self.pack()
-        
+
+        leftframe = customtkinter.CTkFrame(
+        root
+        )        
+        leftframe.pack(side = LEFT, fill = BOTH, anchor = NE, padx = 5)
+
+        rightframe = customtkinter.CTkFrame(
+        root
+        )        
+        rightframe.pack(side = LEFT, fill = BOTH, anchor = NE, padx = 5)               
+ 
+        righterframe = customtkinter.CTkFrame(
+        root
+        )        
+        righterframe.pack(side = LEFT, fill = BOTH, anchor = NE, padx = 5)               
+
         inlbl = customtkinter.CTkLabel(
-        root, 
+        leftframe, 
         text='Program'
         )
         inlbl.pack() 
-                
-        entrythingy = customtkinter.CTkTextbox(root, state='disabled', height = 50)
+
+        entrythingy = customtkinter.CTkTextbox(leftframe, state='disabled', height = 50)
         entrythingy.pack()
-        
+
+        B2 = customtkinter.CTkButton(leftframe,
+        text="Open File",
+        command = self.getapp,
+        height=30, 
+        width=30
+        )
+        B2.pack()          
+
         inlbl2 = customtkinter.CTkLabel(
-        root, 
+        rightframe, 
         text='Flags/Arguments'
         ) 
         inlbl2.pack()            
-        flags = customtkinter.CTkTextbox(root, state='normal', height = 50)
+
+        flags = customtkinter.CTkTextbox(rightframe, state='normal', height = 50)
         flags.pack() 
-                       
-        B = customtkinter.CTkButton(root,  
+
+        B = customtkinter.CTkButton(rightframe,  
         text = 'Run Mono Application',
         command=self.run,
         height=30, 
         width=50
-        )                          
-        B2 = customtkinter.CTkButton(root,
-        text = "Open File",
-        command = self.getapp,
+        ) 
+        B.pack()
+
+        inlbl3 = customtkinter.CTkLabel(
+        righterframe, 
+        text='Custom Script (without typing mono)'
+        ) 
+        inlbl3.pack()            
+
+        custom = customtkinter.CTkTextbox(righterframe, state='normal', height = 50)
+        custom.pack() 
+                       
+        B3 = customtkinter.CTkButton(righterframe,  
+        text = 'Run Custom Script',
+        command=self.runcustom,
         height=30, 
         width=50
-        )
-        B.pack()
-        B2.pack()       
+        ) 
+        B3.pack()                                        
+
     def run(self):
         global app
         subprocess.run(f'mono "{filename}" {flags.get(1.0, END)}', shell=True)
+
     def getapp(self):
         global filename
         entrythingy.configure(state='normal')
@@ -61,11 +99,15 @@ class App(tk.Frame):
         entrythingy.configure(state='normal')        
         entrythingy.insert(1.0,filename)
         entrythingy.configure(state='disabled')                
-           
+
+    def runcustom(self):
+        global custom
+        subprocess.run(f'mono {custom.get(1.0, END)}', shell=True)    
+
 # create the application
 title = "Tk4Mono Tk GUI For Mono"
 root = customtkinter.CTk(className="Tk4Mono")
-root.geometry("450x450")
+root.geometry("650x110")
 root.resizable(True,True)
 myapp = App(root)
 myapp.master.title(title)
