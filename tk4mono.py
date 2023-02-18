@@ -16,7 +16,10 @@ class App(tk.Frame):
         global flags
   
         super().__init__(master)
-        photo = PhotoImage(file = "./images/Micon.png")
+        try:
+            photo = PhotoImage(file = "/usr/local/bin/images/Micon.png")
+        except:
+            photo = PhotoImage(file = "images/Micon.png")        
         root.iconphoto(False, photo) 
         self.pack()
 
