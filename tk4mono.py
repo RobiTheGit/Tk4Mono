@@ -16,7 +16,7 @@ class App(tk.Frame):
         global flags
   
         super().__init__(master)
-        photo = PhotoImage(file = "Micon.png")
+        photo = PhotoImage(file = "images/Micon.png")
         root.iconphoto(False, photo) 
         self.pack()
 
