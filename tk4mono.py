@@ -14,6 +14,7 @@ class App(tk.Frame):
         global filename
         global entrythingy
         global flags
+        global preflags
   
         super().__init__(master)
         try:
@@ -27,7 +28,8 @@ class App(tk.Frame):
         root
         )        
         leftframe.pack(side = LEFT, fill = BOTH, anchor = NE, padx = 5)
-
+        middleframe = customtkinter.CTkFrame(root)
+        middleframe.pack(side = LEFT, fill = BOTH, anchor = NE, padx = 5)
         rightframe = customtkinter.CTkFrame(
         root
         )        
@@ -37,7 +39,7 @@ class App(tk.Frame):
         root
         )        
         righterframe.pack(side = LEFT, fill = BOTH, anchor = NE, padx = 5)               
-
+	
         inlbl = customtkinter.CTkLabel(
         leftframe, 
         text='Program'
@@ -59,8 +61,20 @@ class App(tk.Frame):
         rightframe, 
         text='Flags/Arguments'
         ) 
-        inlbl2.pack()            
-
+        inlbl2.pack() 
+        
+        inlbl3 = customtkinter.CTkLabel(
+        middleframe, 
+        text='Mono Options'
+        ) 
+        inlbl3.pack()                    
+        preflags = customtkinter.CTkTextbox(middleframe, state='normal', height = 50)
+        preflags.pack()
+        inlbl4 = customtkinter.CTkLabel(
+        rightframe, 
+        text='Program Options'
+        ) 
+        inlbl4.pack()       
         flags = customtkinter.CTkTextbox(rightframe, state='normal', height = 50)
         flags.pack() 
 
@@ -91,7 +105,7 @@ class App(tk.Frame):
 
     def run(self):
         global app
-        subprocess.run(f'mono "{filename}" {flags.get(1.0, END)}', shell=True)
+        subprocess.run(f'mono {preflags.get(1.0, END)} "{filename}" {flags.get(1.0, END)}', shell=True)
 
     def getapp(self):
         global filename
@@ -110,7 +124,7 @@ class App(tk.Frame):
 # create the application
 title = "Tk4Mono Tk GUI For Mono"
 root = customtkinter.CTk(className="Tk4Mono")
-root.geometry("650x110")
+root.geometry("850x250")
 root.resizable(True,True)
 myapp = App(root)
 myapp.master.title(title)
