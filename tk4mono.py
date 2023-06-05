@@ -58,16 +58,10 @@ class App(tk.Frame):
         B2.pack()          
 
         inlbl2 = customtkinter.CTkLabel(
-        rightframe, 
-        text='Flags/Arguments'
-        ) 
-        inlbl2.pack() 
-        
-        inlbl3 = customtkinter.CTkLabel(
         middleframe, 
         text='Mono Options'
         ) 
-        inlbl3.pack()                    
+        inlbl2.pack() 
         preflags = customtkinter.CTkTextbox(middleframe, state='normal', height = 50)
         preflags.pack()
         inlbl4 = customtkinter.CTkLabel(
